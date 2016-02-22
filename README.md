@@ -1,2 +1,2 @@
 # voice
-only test
+opensips+freeswitch
