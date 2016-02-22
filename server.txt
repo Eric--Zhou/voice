@@ -1,0 +1,72 @@
+112.124.2.100 
+->
+58.215.45.250 
+192.168.18.129
+
+TEL:010-83035-073
+
+1) yum -y install epel-release
+2) rpm -Uvh http://files.freeswitch.org/freeswitch-release-1-6.noarch.rpm
+3) yum -y install git gcc-c++ autoconf automake libtool wget python ncurses-devel zlib-devel libjpeg-devel openssl-devel e2fsprogs-devel sqlite-devel libcurl-devel pcre-devel speex-devel ldns-devel libedit-devel libxml2-devel
+4) yum -y install libyuv-devel opus-devel libvpx-devel libvpx2* libdb4* libidn-devel unbound-devel libuuid-devel lua-devel libsndfile-devel libidn-devel unbound-devel libdb4* libuuid-devel
+5) cd /usr/local/src
+6) git clone -b v1.6.5 https://freeswitch.org/stash/scm/fs/freeswitch.git
+7) cd /usr/local/src/freeswitch
+8) ./bootstrap.sh
+9) ./configure (autoreconf -ivf)
+10) make
+11) make install
+12) make cd-sounds-install
+13) make cd-moh-install
+14) cd /usr/local/freeswitch/bin
+15) ./freeswitch -nonat -nonatmap
+
+yum install git gcc-c++ autoconf automake libtool wget python ncurses-devel zlib-devel libjpeg-devel openssl-devel e2fsprogs-devel sqlite-devel libcurl-devel pcre-devel speex-devel ldns-devel libedit-devel libxml2-devel
+
+
+（1）libyuv
+
+　　cd freeswitch/libs
+　　git clone https://freeswitch.org/stash/scm/sd/libyuv.git
+　　cd libyuv
+　　make -f linux.mk CXXFLAGS="-fPIC -O2 -fomit-frame-pointer -Iinclude/"
+　　make install
+　　cp /usr/lib/pkgconfig/libyuv.pc /usr/lib64/pkgconfig/
+
+
+（2）libvpx
+
+　　cd ..
+　　git clone https://freeswitch.org/stash/scm/sd/libvpx.git
+　　cd libvpx
+　　./configure --enable-pic --disable-static --enable-shared
+　　make
+　　make install
+　　cp /usr/local/lib/pkgconfig/vpx.pc /usr/lib64/pkgconfig/
+
+（※）下载yasm并编译
+
+　　yasm下载地址：http://www.tortall.net/projects/yasm/releases/
+　　yasm解压命令：tar -zxvf ****.tar.gz （我下载的是yasm-1.3.0.tar.gz）
+
+（3）opus
+
+　　cd ..
+　　git clone https://freeswitch.org/stash/scm/sd/opus.git
+　　cd opus
+　　./autogen.sh
+　　./configure
+　　make
+　　make install
+　　cp /usr/local/lib/pkgconfig/opus.pc /usr/lib64/pkgconfig
+
+（4）libpng
+
+　　cd ..
+　　git clone https://freeswitch.org/stash/scm/sd/libpng.git
+　　cd libpng
+　　./configure
+　　make CFLAGS="-fPIC -O2 -fomit-frame-pointer"
+　　make install
+　　cp /usr/local/lib/pkgconfig/libpng* /usr/lib64/pkgconfig/
+
